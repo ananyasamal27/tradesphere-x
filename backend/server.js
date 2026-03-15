@@ -47,6 +47,10 @@ if (db) {
   }, 10000);
 }
 
+app.get("/", (req, res) => {
+  res.send("TradeSphere X backend is running 🚀");
+});
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`🚀 TradeSphere X Backend running on http://localhost:${PORT}`);
