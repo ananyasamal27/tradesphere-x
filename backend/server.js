@@ -2,6 +2,34 @@ const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
 
+const fs = require("fs");
+const mysql = require("mysql2");
+
+const connection = mysql.createConnection({
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+  port: process.env.DB_PORT,
+  ssl: { rejectUnauthorized: false }
+});
+
+connection.connect((err) => {
+  if (err) {
+    console.log("DB connection error:", err);
+    return;
+  }
+
+  console.log("Connected to Aiven DB");
+
+  const sql = fs.readFileSync("./Dump20260316.sql", "utf8");
+
+  connection.query(sql, (err) => {
+    if (err) console.log("Import error:", err);
+    else console.log("Database imported successfully");
+  });
+});
+
 const app = express();
 app.use(cors());
 app.use(express.json());
