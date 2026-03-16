@@ -21,4 +21,19 @@ pool.getConnection()
     console.error('❌ MySQL connection failed:', err.message);
   });
 
+  const fs = require("fs");
+const path = require("path");
+
+async function initSchema() {
+  try {
+    const schema = fs.readFileSync(path.join(__dirname, "schema.sql"), "utf8");
+    await pool.query(schema);
+    console.log("✅ Database schema initialized");
+  } catch (err) {
+    console.error("Schema init error:", err.message);
+  }
+}
+
+initSchema();
+
 module.exports = pool;
