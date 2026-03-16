@@ -27,7 +27,11 @@ const path = require("path");
 
 async function initSchema() {
   try {
-    const schema = fs.readFileSync(path.join(__dirname, "schema.sql"), "utf8");
+    let schema = fs.readFileSync(path.join(__dirname, "schema.sql"), "utf8");
+
+    schema = schema.replace(/CREATE DATABASE.*?;/gi, "");
+    schema = schema.replace(/USE .*?;/gi, "");
+    
     await pool.query(schema);
     console.log("✅ Database schema initialized");
   } catch (err) {
