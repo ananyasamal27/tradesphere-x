@@ -1,9 +1,6 @@
 -- TradeSphere X Database Schema
 -- Run this file to initialize the database
 
-CREATE DATABASE IF NOT EXISTS tradesphere;
-USE tradesphere;
-
 -- Investors
 CREATE TABLE IF NOT EXISTS Investor (
   id INT AUTO_INCREMENT PRIMARY KEY,
